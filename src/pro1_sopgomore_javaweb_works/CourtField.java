@@ -52,7 +52,8 @@ class CFmid extends Label{
 		path=new File("lib/MidField.png").getAbsolutePath();
 		Image image = new 
 				Image(new FileInputStream(path));
-		
+		i1v=new ImageView(image);
+		i1v.setPreserveRatio(true);
 		this.setText("114514");
 		this.setPrefSize(200, 200);
 	    this.setGraphic(i1v);
