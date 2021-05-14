@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -46,7 +48,7 @@ public class CourtField extends Application
 //静态类
 //若有全局方法及变量则写入其中
 class Paint{
-	
+			
 }
 
 class CFmid extends Label{
@@ -55,6 +57,27 @@ class CFmid extends Label{
 	String path_B;
 	Image i1;
 	ImageView i1v;
+
+	void event(player pler,int i,int j)
+	{
+		this.setOnMouseClicked(e->{
+			if(pler.nodes[i][j]=='*'){
+				(pler.nodecount)--;
+				if(pler.isWhite)
+				{	
+					pler.nodes[i][j]='w';
+					this.Turn(0);
+					pler.isWhite=!pler.isWhite;
+				}
+				else
+				{	
+					pler.nodes[i][j]='b';
+					this.Turn(1);
+					pler.isWhite=!pler.isWhite;
+				}
+			}
+		});
+	}
 	CFmid()
 	{
 		path=new File("lib/MidField.png").getAbsolutePath();
@@ -124,6 +147,27 @@ class CFside extends Label{
 		    this.setGraphic(i1v);
 			}
 	}
+	void event(player pler,int i,int j)
+	{
+		this.setOnMouseClicked(e->{
+			if(pler.nodes[i][j]=='*'){
+				(pler.nodecount)--;
+				if(pler.isWhite)
+				{	
+					pler.nodes[i][j]='w';
+					this.Turn(0);
+					pler.isWhite=!pler.isWhite;
+				}
+				else
+				{	
+					pler.nodes[i][j]='b';
+					this.Turn(1);
+					pler.isWhite=!pler.isWhite;
+				}
+			}
+		});
+		
+	}
 	//0变白，1变黑
 	void Turn(int i)
 	{
@@ -178,6 +222,26 @@ class CFcorner extends Label{
 		this.setPrefSize(50, 50);
 	    this.setGraphic(i1v);
 		}
+	}
+	void event(player pler,int i,int j)
+	{
+		this.setOnMouseClicked(e->{
+			if(pler.nodes[i][j]=='*'){
+				(pler.nodecount)--;
+				if(pler.isWhite)
+				{	
+					pler.nodes[i][j]='w';
+					this.Turn(0);
+					pler.isWhite=!pler.isWhite;
+				}
+				else
+				{	
+					pler.nodes[i][j]='b';
+					this.Turn(1);
+					pler.isWhite=!pler.isWhite;
+				}
+			}
+		});
 	}
 	//0变白，1变黑
 	void Turn(int i)
