@@ -95,6 +95,8 @@ class Rules{
 					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 				row++;
 			}
+			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 		}
 		if(MaxLen_b>4)
 			return 1;
@@ -119,6 +121,8 @@ class Rules{
 					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 				column++;
 			}
+			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 		}
 		if(MaxLen_b>4)
 			return 1;
@@ -145,6 +149,8 @@ class Rules{
 				column++;
 				row--;
 			}
+			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 		}
 		if(MaxLen_b>4)
 			return 1;
@@ -170,6 +176,8 @@ class Rules{
 				row--;
 				column++;
 			}
+			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 		}
 		if(MaxLen_b>4)
 			return 1;
@@ -196,6 +204,8 @@ class Rules{
 				column++;
 				row++;
 			}
+			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 		}
 		if(MaxLen_b>4)
 			return 1;
@@ -221,6 +231,8 @@ class Rules{
 				column++;
 				row++;
 			}
+			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
 		}
 		if(MaxLen_b>4)
 			return 1;
@@ -243,14 +255,14 @@ class CFmid extends Label{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_w[i][j]=1;
-				pler.nodecount--;pler.print(2);
+				pler.nodecount--;pler.print(1);
 				this.Turn(0);
 				pler.status=Rules.result(pler);
 				pler.isWhite=false;
 			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_b[i][j]=1;
-				pler.nodecount--;pler.print(2);
+				pler.nodecount--;pler.print(1);
 				this.Turn(1);
 				pler.status=Rules.result(pler);
 				pler.isWhite=true;
@@ -332,14 +344,14 @@ class CFside extends Label{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_w[i][j]=1;
-				pler.nodecount--;pler.print(2);
+				pler.nodecount--;pler.print(1);
 				this.Turn(0);
 				pler.status=Rules.result(pler);
 				pler.isWhite=false;
 			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_b[i][j]=1;
-				pler.nodecount--;pler.print(2);
+				pler.nodecount--;pler.print(1);
 				this.Turn(1);
 				pler.status=Rules.result(pler);
 				pler.isWhite=true;
@@ -409,7 +421,7 @@ class CFcorner extends Label{
 			{
 				pler.nodes_w[i][j]=1;
 				
-				pler.nodecount--;pler.print(2);
+				pler.nodecount--;pler.print(1);
 				this.Turn(0);
 				pler.status=Rules.result(pler);
 				pler.isWhite=false;

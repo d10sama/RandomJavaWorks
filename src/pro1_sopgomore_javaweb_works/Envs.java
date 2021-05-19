@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -29,16 +31,16 @@ public class Envs extends Application{
 		// TODO Auto-generated method stub
 		GridPane cf=new GridPane();
 		CourtField(cf);
-		cf.setOnMouseClicked(e->
-			{
-				judge(cf);
-			}
-		);
 		Scene scene = new Scene(cf,1000,850);
+		cf.setOnMouseClicked(e->
+		{
+			judge(cf,scene);
+		}
+	);
 		scene.setOnMouseClicked(e->
 		{
 			if(quit==true)
-				primaryStage.hide();
+				primaryStage.close();
 		});
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("五子棋");
@@ -48,7 +50,7 @@ public class Envs extends Application{
 	    launch(args);
 	}
 	
-	void judge(GridPane cf)
+	void judge(GridPane cf,Scene sc)
 	{
 		//本段问题！
 		//平局后刷新太快，需要等待
@@ -56,6 +58,7 @@ public class Envs extends Application{
 		if(pler.status()==-1)
 		{
 			pler.refresh();
+			
 			cf.getChildren().removeAll(mids);
 			cf.getChildren().removeAll(top);
 			cf.getChildren().removeAll(left);
@@ -68,6 +71,7 @@ public class Envs extends Application{
 		else if(pler.status()==1)
 		{
 			pler.refresh();
+			
 			cf.getChildren().removeAll(mids);
 			cf.getChildren().removeAll(top);
 			cf.getChildren().removeAll(left);
@@ -80,6 +84,7 @@ public class Envs extends Application{
 		else if(pler.status()==0)
 		{
 			pler.refresh();
+			
 			cf.getChildren().removeAll(mids);
 			cf.getChildren().removeAll(top);
 			cf.getChildren().removeAll(left);
@@ -106,19 +111,34 @@ public class Envs extends Application{
 			winner=String.format(winner, " Black!!");
 		if(status==0)
 			winner=String.format(winner, " Nobody,你们俩平局");
+		Stage tmp=new Stage();
+		GridPane tmp3=new GridPane();
+		Scene tmp2=new Scene(tmp3,1000,850);
+		tmp.setScene(tmp2);
+		tmp.setTitle("对局结果");
+		tmp.show();
 		l1.setText(winner);
-		cf.add(l1, 1, 1);
-		cf.add(CON, 1, 2);
-		cf.add(QUIT, 1, 3);
+		l1.setFont(new Font(30));
+		tmp3.add(l1, 1, 1);
+		tmp3.add(CON, 1, 2);
+		tmp3.add(QUIT, 1, 3);
 		CON.setOnMouseClicked(e->
 			{
-				cf.getChildren().removeAll(l1,CON,QUIT);
+				tmp.close();
 				CourtField(cf);
 			}
 		);
 		QUIT.setOnMouseClicked(e->
 			{
-				this.quit=true;
+				
+				try {
+					this.stop();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}finally {
+					tmp.close();
+				}
 			}
 		);
 		
