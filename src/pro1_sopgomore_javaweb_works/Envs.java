@@ -1,5 +1,8 @@
 package pro1_sopgomore_javaweb_works;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,13 +23,23 @@ public class Envs extends Application{
 	CFside[] bottom;
 	CFcorner ul,ur,dl,dr;
 	player pler=new player();
+	boolean quit=false;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		GridPane cf=new GridPane();
 		CourtField(cf);
-		//Rules(cf);
-		Scene scene = new Scene(cf,1324,800);
+		cf.setOnMouseClicked(e->
+			{
+				judge(cf);
+			}
+		);
+		Scene scene = new Scene(cf,1000,850);
+		scene.setOnMouseClicked(e->
+		{
+			if(quit==true)
+				primaryStage.hide();
+		});
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("五子棋");
 		primaryStage.show();
@@ -34,17 +47,95 @@ public class Envs extends Application{
 	public static void main(String[] args) {
 	    launch(args);
 	}
+	
+	void judge(GridPane cf)
+	{
+		//本段问题！
+		//平局后刷新太快，需要等待
+		//平局时刻
+		if(pler.status()==-1)
+		{
+			pler.refresh();
+			cf.getChildren().removeAll(mids);
+			cf.getChildren().removeAll(top);
+			cf.getChildren().removeAll(left);
+			cf.getChildren().removeAll(rig);
+			cf.getChildren().removeAll(bottom);
+			cf.getChildren().removeAll(ul,ur,dl,dr);
+			won(cf,-1);
+		}
+		//黑色胜利
+		else if(pler.status()==1)
+		{
+			pler.refresh();
+			cf.getChildren().removeAll(mids);
+			cf.getChildren().removeAll(top);
+			cf.getChildren().removeAll(left);
+			cf.getChildren().removeAll(rig);
+			cf.getChildren().removeAll(bottom);
+			cf.getChildren().removeAll(ul,ur,dl,dr);
+			won(cf,1);
+		}
+		//白色胜利
+		else if(pler.status()==0)
+		{
+			pler.refresh();
+			cf.getChildren().removeAll(mids);
+			cf.getChildren().removeAll(top);
+			cf.getChildren().removeAll(left);
+			cf.getChildren().removeAll(rig);
+			cf.getChildren().removeAll(bottom);
+			cf.getChildren().removeAll(ul,ur,dl,dr);
+			won(cf,0);
+		}
+		//其他情况
+		else
+		{
+		}
+	}
+	
+	void won(GridPane cf,int status)
+	{
+		Button CON=new Button("Continue?");//continue?
+		Button QUIT=new Button("Quit?");
+		String winner="The winner is %s";
+		Label l1=new Label();
+		if(status==0)
+			winner=String.format(winner, " White!!");
+		if(status==1)
+			winner=String.format(winner, " Black!!");
+		if(status==0)
+			winner=String.format(winner, " Nobody,你们俩平局");
+		l1.setText(winner);
+		cf.add(l1, 1, 1);
+		cf.add(CON, 1, 2);
+		cf.add(QUIT, 1, 3);
+		CON.setOnMouseClicked(e->
+			{
+				cf.getChildren().removeAll(l1,CON,QUIT);
+				CourtField(cf);
+			}
+		);
+		QUIT.setOnMouseClicked(e->
+			{
+				this.quit=true;
+			}
+		);
+		
+		
+		
+	}
 	//环境构造
 	void CourtField(GridPane cf)
 	{
 		int PosDetect=0;
-		cf.setAlignment(Pos.TOP_CENTER);
+		cf.setAlignment(Pos.TOP_LEFT);
 		ul=new CFcorner(0);
-		mids=new CFmid[234];
-		top=new CFside[18];
+		mids=new CFmid[169];
+		top=new CFside[13];
 		left=new CFside[13];
 		rig=new CFside[13];
-		bottom=new CFside[18];
+		bottom=new CFside[13];
 		ur=new CFcorner(1);
 		dl=new CFcorner(3);
 		dr=new CFcorner(2);
@@ -54,14 +145,14 @@ public class Envs extends Application{
 		{	
 			left[PosDetect]=new CFside(0);
 			final int PD=PosDetect;
-			left[PosDetect].event(pler,0,PD+1);
+			left[PosDetect].event(pler,PD+1,0);
 			cf.add(left[PosDetect],0,PosDetect+1);
 			PosDetect++;
 		}
 		cf.add(dl,0,14);
-		dl.event(pler,0,14);
+		dl.event(pler,14,0);
 		PosDetect=0;
-		for(int i=0;i<18;i++)
+		for(int i=0;i<13;i++)
 			for(int j=0;j<15;j++)
 			{
 				final int I=i;
@@ -70,200 +161,39 @@ public class Envs extends Application{
 				{
 				case 0:{
 						top[i]=new CFside(1);
-						top[i].event(pler,I+1,J);
+						top[i].event(pler,J,I+1);
 							cf.add(top[i], i+1, j);
 						break;
 						}
 				case 14:{
 						bottom[i]=new CFside(3);
-						bottom[i].event(pler,I+1,J);
+						bottom[i].event(pler,J,I+1);
 						cf.add(bottom[i], i+1, j);
 						break;
 						}
 				default:
 					final int PD=i*(j-1);
 					mids[PD]=new CFmid();
-					mids[PD].event(pler,I+1,J);
+					mids[PD].event(pler,J,I+1);
 					cf.add(mids[PD], i+1, j);
 					break;
 				
 				}
 			}
 		
-		cf.add(ur, 19, 0);
-		ur.event(pler,19,0);
+		cf.add(ur, 14, 0);
+		ur.event(pler,0,14);
 		while(PosDetect<13)
 		{
 			final int PD=PosDetect;
 			rig[PosDetect]=new CFside(2);
-			rig[PosDetect].event(pler,19,PD+1);
-			cf.add(rig[PosDetect], 19, PosDetect+1);
+			rig[PosDetect].event(pler,PD+1,14);
+			cf.add(rig[PosDetect], 14, PosDetect+1);
 			PosDetect++;
 		}
-		cf.add(dr, 19, 14);
-		dr.event(pler,19,14);
-	}
-	//规则构造
-	void Rules(GridPane cf)
-	{
-		cf.setOnMouseClicked(e->
-		{
-			//5连续则（！isWhite)胜利
-			judge(pler,cf);
-			//pler.coutdown=0则平局
-			draw(pler,cf);
-		}
-		);
-	}
-	//平局
-	void draw(player pler,GridPane cf)
-	{
-		if(pler.nodecount==0)
-			clr(pler,cf);
-	}
-	//4次遍历
-	void judge(player pler,GridPane cf)
-	{
-		int PresentLen=0;
-		int MaxLen=0;
-	}
-	void clr(player pler,GridPane cf)
-	{
-		pler.refresh();
-		//消息弹窗以及重来还是退出
+		cf.add(dr, 14, 14);
+		dr.event(pler,14,14);
 		
 		
-		CourtField(cf);
 	}
 }
-/*
-//竖着来
-for(int i=0;i<20;i++)
-{
-	int j=0;
-	while(j<15)
-	{
-		if(pler.nodes[i][j]==1)
-		{
-			PresentLen++;
-		}else
-		{
-			MaxLen=PresentLen>MaxLen?PresentLen:MaxLen;
-			PresentLen=0;
-		}
-		j++;
-	}
-}
-if(MaxLen>4){clr(pler,cf);};
-MaxLen=0;
-PresentLen=0;
-//横着来
-for(int i=0;i<15;i++)
-{
-	int j=0;
-	while(j<20)
-	{
-		if(pler.nodes[j][i]==1)
-		{
-			PresentLen++;
-		}else
-		{
-			MaxLen=PresentLen>MaxLen?PresentLen:MaxLen;
-			PresentLen=0;
-		}
-		j++;
-	}
-}
-if(MaxLen>4){clr(pler,cf);};
-MaxLen=0;
-PresentLen=0;
-//左下到右上
-for(int i=5;i<15;i++)
-{
-		int pdi=i;
-		int pdj=0;
-		while(pdi>-1)
-		{
-			if(pler.nodes[pdj][pdi]==1)
-			{
-				PresentLen++;
-			}else
-			{
-				MaxLen=PresentLen>MaxLen?PresentLen:MaxLen;
-				PresentLen=0;
-			}
-			pdj+=1;
-			pdi-=1;
-		}
-}
-if(MaxLen>4){clr(pler,cf);};
-MaxLen=0;
-PresentLen=0;
-
-for(int j=1;j<14;j++)
-{
-	int pdi=14;
-	int pdj=j;
-	while(pdj<20&&pdi>-1)
-	{
-		if(pler.nodes[pdj][pdi]==1)
-		{
-			PresentLen++;
-		}else
-		{
-			MaxLen=PresentLen>MaxLen?PresentLen:MaxLen;
-			PresentLen=0;
-		}
-		pdj+=1;
-		pdi-=1;
-	}
-}
-if(MaxLen>4){clr(pler,cf);};
-MaxLen=0;
-PresentLen=0;
-////左上到右下
-for(int j=14;j>-1;j++)
-{
-	int pdi=0;
-	int pdj=j;
-	while(pdi<15&&pdj<20)
-	{
-		if(pler.nodes[pdj][pdi]==1)
-		{
-			PresentLen++;
-		}else
-		{
-			MaxLen=PresentLen>MaxLen?PresentLen:MaxLen;
-			PresentLen=0;
-		}
-	}
-	pdj++;
-	pdi++;
-}
-if(MaxLen>4){clr(pler,cf);};
-MaxLen=0;
-PresentLen=0;
-
-for(int i=1;i<15;i++)
-{
-	int pdi=i;
-	int pdj=0;
-	while(pdi<15&&pdj<20)
-	{
-		if(pler.nodes[pdj][pdi]==1)
-		{
-			PresentLen++;
-		}else
-		{
-			MaxLen=PresentLen>MaxLen?PresentLen:MaxLen;
-			PresentLen=0;
-		}
-	}
-	pdj++;
-	pdi++;
-}
-
-if(MaxLen>4){clr(pler,cf);};
-MaxLen=0;
-PresentLen=0;
- */ 
