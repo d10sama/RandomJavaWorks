@@ -46,7 +46,7 @@ class CFmid extends Label{
 	Image i1;
 	ImageView i1v;
 	boolean isLoadFail=false;
-	void event(player pler,int i,int j)
+	void event(Player pler,int i,int j)
 	{
 		this.setOnMouseClicked(e->{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
@@ -156,7 +156,7 @@ class CFside extends Label{
 				this.setPrefSize(300, 50);
 			}
 	}
-	void event(player pler,int i,int j)
+	void event(Player pler,int i,int j)
 	{
 		this.setOnMouseClicked(e->{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
@@ -243,7 +243,7 @@ class CFcorner extends Label{
 			this.setPrefSize(300, 50);
 		}
 	}
-	void event(player pler,int i,int j)
+	void event(Player pler,int i,int j)
 	{
 		this.setOnMouseClicked(e->{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)

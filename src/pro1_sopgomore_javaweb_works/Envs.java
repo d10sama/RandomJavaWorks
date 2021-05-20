@@ -15,13 +15,22 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Envs extends Application{
+
+//	public static void main(String[] args) {
+//		Application.launch(args);
+//	}
+	public void run(String[] args)
+	{
+		launch(args);
+	}
+	
 	CFmid[] mids;
 	CFside[] top;
 	CFside[] left;
 	CFside[] rig;
 	CFside[] bottom;
 	CFcorner ul,ur,dl,dr;
-	player pler=new player();
+	Player pler=new Player();
 	boolean quit=false;
 	
 	@Override
@@ -51,10 +60,6 @@ public class Envs extends Application{
 		primaryStage.setTitle("五子棋");
 		primaryStage.show();
 	}
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
-	
 	//对局状态判断
 	void judge(GridPane cf,Stage ps)
 	{

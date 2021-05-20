@@ -2,14 +2,14 @@ package pro1_sopgomore_javaweb_works;
 
 //╟ввсохвъ
 
-public class player {
+public class Player {
 	boolean isWhite=true;
 	int[][] nodes_w;
 	int[][] nodes_b;
 	int status=0;
 	int nodecount=225;
 	
-	player()
+	Player()
 	{
 		nodes_w=new int[15][15];
 		nodes_b=new int[15][15];

@@ -11,7 +11,7 @@ import java.util.Date;
 //静态类
 //若有全局方法及变量则写入其中
 public class Rules{
-	static int result(player pler)
+	static int result(Player pler)
 	{
 		int isDraw=draw(pler);
 		int isWon=winner(pler);
@@ -23,7 +23,7 @@ public class Rules{
 	}
 	
 	//平局状况
-	static int draw(player pler)
+	static int draw(Player pler)
 	{
 		if(pler.nodecount==0)
 			return 1;
@@ -31,7 +31,7 @@ public class Rules{
 			return 0;
 	}
 	//1黑赢，0白赢，2什么也不发生
-	static int winner(player pler)
+	static int winner(Player pler)
 	{
 		int PresentLen_b=0;
 		int MaxLen_b=0;
