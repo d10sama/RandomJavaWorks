@@ -3,24 +3,17 @@ package pro1_sopgomore_javaweb_works;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 //标签方块
-
 public class CourtField extends Application
 {
 
@@ -45,202 +38,6 @@ public class CourtField extends Application
 	}
 }
 
-//静态类
-//若有全局方法及变量则写入其中
-class Rules{
-	static int result(player pler)
-	{
-		int isDraw=draw(pler);
-		int isWon=winner(pler);
-		System.out.println(isDraw+" "+isWon);
-		if(isDraw==1)
-			return -1;
-		else
-			return isWon;
-	}
-	
-	//平局状况
-	static int draw(player pler)
-	{
-		if(pler.nodecount==0)
-			return 1;
-		else 
-			return 0;
-	}
-	//1黑赢，0白赢，2什么也不发生
-	static int winner(player pler)
-	{
-		int count=0;
-		
-		int PresentLen_b=0;
-		int MaxLen_b=0;
-		int PresentLen_w=0;
-		int MaxLen_w=0;
-		//竖着来
-		for(int column=0;column<15;column++)
-		{	
-			int row=0;
-			PresentLen_w=0;
-			PresentLen_b=0;
-			while(row<15)
-			{
-				 
-				if(pler.nodes_w[row][column]==1)
-					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-				if(pler.nodes_b[row][column]==1)
-					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-				row++;
-			}
-			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-		}
-		if(MaxLen_b>4)
-			return 1;
-		else if(MaxLen_w>4)
-			return 0;
-		//横着来
-		for(int row=0;row<15;row++)
-		{
-			int column=0;
-			PresentLen_w=0;
-			PresentLen_b=0;
-			while(column<15)
-			{
-				 
-				if(pler.nodes_w[row][column]==1)
-					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-				if(pler.nodes_b[row][column]==1)
-					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-				column++;
-			}
-			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-		}
-		if(MaxLen_b>4)
-			return 1;
-		else if(MaxLen_w>4)
-			return 0;
-		//左下到右上
-		for(int i=5;i<15;i++)
-		{
-			int row=i;
-			int column=0;
-			PresentLen_w=0;
-			PresentLen_b=0;
-			while(column<=i)
-			{
-				 
-				if(pler.nodes_w[row][column]==1)
-					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-				if(pler.nodes_b[row][column]==1)
-					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-				column++;
-				row--;
-			}
-			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-		}
-		if(MaxLen_b>4)
-			return 1;
-		else if(MaxLen_w>4)
-			return 0;
-		for(int precolumn=0;precolumn<=10;precolumn++)
-		{
-			int row=14;
-			int column=precolumn;
-			PresentLen_w=0;
-			PresentLen_b=0;
-			while(column<15&&row>-1)
-			{
-				 
-				if(pler.nodes_w[row][column]==1)
-					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-				if(pler.nodes_b[row][column]==1)
-					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-				row--;
-				column++;
-			}
-			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-		}
-		if(MaxLen_b>4)
-			return 1;
-		else if(MaxLen_w>4)
-			return 0;
-		//左上到右下
-		for(int precolumn=10;precolumn>-1;precolumn--)
-		{
-			int row=0;
-			int column=precolumn;
-			PresentLen_w=0;
-			PresentLen_b=0;
-			while(column<15)
-			{
-				 
-				if(pler.nodes_w[row][column]==1)
-					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-				if(pler.nodes_b[row][column]==1)
-					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-				column++;
-				row++;
-			}
-			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-		}
-		if(MaxLen_b>4)
-			return 1;
-		else if(MaxLen_w>4)
-			return 0;
-		for(int preRow=0;preRow<=10;preRow++)
-		{
-			int row=preRow;
-			int column=0;
-			PresentLen_w=0;
-			PresentLen_b=0;
-			while(row<15)
-			{
-				 
-				if(pler.nodes_w[row][column]==1)
-					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-				if(pler.nodes_b[row][column]==1)
-					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-				column++;
-				row++;
-			}
-			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
-			MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
-		}
-		if(MaxLen_b>4)
-			return 1;
-		else if(MaxLen_w>4)
-			return 0;
-		return 2;
-	}
-}
 
 class CFmid extends Label{
 	String path;
@@ -248,7 +45,7 @@ class CFmid extends Label{
 	String path_B;
 	Image i1;
 	ImageView i1v;
-
+	boolean isLoadFail=false;
 	void event(player pler,int i,int j)
 	{
 		this.setOnMouseClicked(e->{
@@ -275,14 +72,24 @@ class CFmid extends Label{
 		path_W=new File("lib/MidField_W.png").getAbsolutePath();
 		path_B=new File("lib/MidField_B.png").getAbsolutePath();
 		try {
-			i1 = new 
-					Image(new FileInputStream(path));
-			}catch(Exception e) {e.printStackTrace();}
-			finally {
+			i1 = new Image(new FileInputStream(path));
 			i1v=new ImageView(i1);
 			i1v.setPreserveRatio(true);
 			this.setPrefSize(50, 50);
 		    this.setGraphic(i1v);
+			}catch(Exception e) {
+				File tmp=new File("locationDetect");
+				isLoadFail=true;
+				if(!tmp.exists())
+					try {
+						tmp.createNewFile();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						this.setText("图像文件未找到且路径寻找失败！");
+						this.setPrefSize(300, 50);
+					}
+				this.setText(String.format("请在%s同级文件夹中放入‘lib’文件夹",tmp.getAbsolutePath()));
+				this.setPrefSize(300, 50);
 			}
 	}
 	//0变白，1变黑
@@ -319,6 +126,7 @@ class CFside extends Label{
 	String path_B;
 	Image i1;
 	ImageView i1v;
+	boolean isLoadFail=false;
 	int iRotated;
 	CFside(int i)
 	{
@@ -326,16 +134,26 @@ class CFside extends Label{
 		path_W=new File("lib/SideField_W.png").getAbsolutePath();
 		path_B=new File("lib/SideField_B.png").getAbsolutePath();
 		try {
-			i1 = new 
-					Image(new FileInputStream(path));
-			}catch(Exception e) {e.printStackTrace();}
-			finally {
+			i1 = new Image(new FileInputStream(path));
 			i1v=new ImageView(i1);
 			i1v.setPreserveRatio(true);
 			this.setPrefSize(50, 50);
 			iRotated=i*90;
 			i1v.setRotate(iRotated);
 		    this.setGraphic(i1v);
+			}catch(Exception e) {
+				File tmp=new File("locationDetect");
+				isLoadFail=true;
+				if(!tmp.exists())
+					try {
+						tmp.createNewFile();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						this.setText("图像文件未找到且路径寻找失败！");
+						this.setPrefSize(300, 50);
+					}
+				this.setText(String.format("请在%s同级文件夹中放入‘lib’文件夹",tmp.getAbsolutePath()));
+				this.setPrefSize(300, 50);
 			}
 	}
 	void event(player pler,int i,int j)
@@ -395,6 +213,7 @@ class CFcorner extends Label{
 	String path_B;
 	Image i1;
 	ImageView i1v;
+	boolean isLoadFail=false;
 	int iRotated;
 	CFcorner(int i)
 	{
@@ -402,16 +221,26 @@ class CFcorner extends Label{
 		path_W=new File("lib/CornerField_W.png").getAbsolutePath();
 		path_B=new File("lib/CornerField_B.png").getAbsolutePath();
 		try {
-		i1 = new 
-				Image(new FileInputStream(path));
-		}catch(Exception e) {e.printStackTrace();}
-		finally {
-		i1v=new ImageView(i1);
-		i1v.setPreserveRatio(true);
-		iRotated=i*90;
-		i1v.setRotate(iRotated);
-		this.setPrefSize(50, 50);
-	    this.setGraphic(i1v);
+			i1 = new Image(new FileInputStream(path));
+			i1v=new ImageView(i1);
+			i1v.setPreserveRatio(true);
+			iRotated=i*90;
+			i1v.setRotate(iRotated);
+			this.setPrefSize(50, 50);
+		    this.setGraphic(i1v);
+		}catch(Exception e) {
+			File tmp=new File("locationDetect");
+			isLoadFail=true;
+			if(!tmp.exists())
+				try {
+					tmp.createNewFile();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					this.setText("图像文件未找到且路径寻找失败！");
+					this.setPrefSize(300, 50);
+				}
+			this.setText(String.format("请在%s同级文件夹中放入‘lib’文件夹",tmp.getAbsolutePath()));
+			this.setPrefSize(300, 50);
 		}
 	}
 	void event(player pler,int i,int j)
@@ -464,16 +293,4 @@ class CFcorner extends Label{
 			e.printStackTrace();
 		}
 	}
-
 }
-
-//	
-//	
-//	void clr(player pler,GridPane cf,int isWhite)
-//	{
-//		pler.refresh();
-//		//消息弹窗以及重来还是退出
-//		
-//		
-//		CourtField(cf);
-//	}

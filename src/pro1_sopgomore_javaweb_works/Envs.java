@@ -1,20 +1,17 @@
 package pro1_sopgomore_javaweb_works;
 
-import java.util.Collection;
-import java.util.LinkedList;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Envs extends Application{
@@ -26,15 +23,23 @@ public class Envs extends Application{
 	CFcorner ul,ur,dl,dr;
 	player pler=new player();
 	boolean quit=false;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		GridPane cf=new GridPane();
 		CourtField(cf);
+		if(ul.isLoadFail)
+		{
+			clr(cf);
+			Label test=new Label(ul.getText());
+			test.setPrefSize(1000,200);
+			cf.add(test, 1, 1);
+		}
 		Scene scene = new Scene(cf,1000,850);
 		cf.setOnMouseClicked(e->
 		{
-			judge(cf,scene);
+			judge(cf,primaryStage);
 		}
 	);
 		scene.setOnMouseClicked(e->
@@ -47,10 +52,11 @@ public class Envs extends Application{
 		primaryStage.show();
 	}
 	public static void main(String[] args) {
-	    launch(args);
+		Application.launch(args);
 	}
 	
-	void judge(GridPane cf,Scene sc)
+	//对局状态判断
+	void judge(GridPane cf,Stage ps)
 	{
 		//本段问题！
 		//平局后刷新太快，需要等待
@@ -58,48 +64,31 @@ public class Envs extends Application{
 		if(pler.status()==-1)
 		{
 			pler.refresh();
-			
-			cf.getChildren().removeAll(mids);
-			cf.getChildren().removeAll(top);
-			cf.getChildren().removeAll(left);
-			cf.getChildren().removeAll(rig);
-			cf.getChildren().removeAll(bottom);
-			cf.getChildren().removeAll(ul,ur,dl,dr);
-			won(cf,-1);
+
+			won(cf,-1,ps);
 		}
 		//黑色胜利
 		else if(pler.status()==1)
 		{
 			pler.refresh();
-			
-			cf.getChildren().removeAll(mids);
-			cf.getChildren().removeAll(top);
-			cf.getChildren().removeAll(left);
-			cf.getChildren().removeAll(rig);
-			cf.getChildren().removeAll(bottom);
-			cf.getChildren().removeAll(ul,ur,dl,dr);
-			won(cf,1);
+
+			won(cf,1,ps);
 		}
 		//白色胜利
 		else if(pler.status()==0)
 		{
 			pler.refresh();
 			
-			cf.getChildren().removeAll(mids);
-			cf.getChildren().removeAll(top);
-			cf.getChildren().removeAll(left);
-			cf.getChildren().removeAll(rig);
-			cf.getChildren().removeAll(bottom);
-			cf.getChildren().removeAll(ul,ur,dl,dr);
-			won(cf,0);
+			won(cf,0,ps);
 		}
 		//其他情况
 		else
 		{
+			
 		}
 	}
-	
-	void won(GridPane cf,int status)
+	//胜利后做什么，-1/0/1状态分离
+	void won(GridPane cf,int status,Stage ps)
 	{
 		Button CON=new Button("Continue?");//continue?
 		Button QUIT=new Button("Quit?");
@@ -112,27 +101,38 @@ public class Envs extends Application{
 		if(status==0)
 			winner=String.format(winner, " Nobody,你们俩平局");
 		Stage tmp=new Stage();
+		GridPane.setMargin(l1, new Insets(0,0,0,115));
 		GridPane tmp3=new GridPane();
-		Scene tmp2=new Scene(tmp3,1000,850);
+		tmp3.setBackground(new Background(new BackgroundFill(Color.CHOCOLATE,null,null)));
+		l1.setText(winner);
+		l1.setPrefHeight(50);
+		l1.setFont(new Font("SimHei",40));
+		l1.setAlignment(Pos.TOP_LEFT);
+		CON.setAlignment(Pos.CENTER);
+		QUIT.setAlignment(Pos.CENTER);
+		CON.setPrefSize(100,50);
+		QUIT.setPrefSize(100,50);
+		tmp3.add(l1, 1, 1);
+		tmp3.add(CON, 1, 3);
+		tmp3.add(QUIT, 2, 3);
+		Scene tmp2=new Scene(tmp3,800,400);
 		tmp.setScene(tmp2);
 		tmp.setTitle("对局结果");
 		tmp.show();
-		l1.setText(winner);
-		l1.setFont(new Font(30));
-		tmp3.add(l1, 1, 1);
-		tmp3.add(CON, 1, 2);
-		tmp3.add(QUIT, 1, 3);
+		
 		CON.setOnMouseClicked(e->
 			{
 				tmp.close();
+				clr(cf);
 				CourtField(cf);
 			}
 		);
 		QUIT.setOnMouseClicked(e->
 			{
-				
+
+				clr(cf);
 				try {
-					this.stop();
+					ps.close();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -145,6 +145,17 @@ public class Envs extends Application{
 		
 		
 	}
+	//清屏
+	void clr(GridPane cf)
+	{
+		cf.getChildren().removeAll(mids);
+		cf.getChildren().removeAll(top);
+		cf.getChildren().removeAll(left);
+		cf.getChildren().removeAll(rig);
+		cf.getChildren().removeAll(bottom);
+		cf.getChildren().removeAll(ul,ur,dl,dr);
+	}
+	
 	//环境构造
 	void CourtField(GridPane cf)
 	{
