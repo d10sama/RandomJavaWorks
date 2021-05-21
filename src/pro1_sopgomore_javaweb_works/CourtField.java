@@ -14,16 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 //±êÇ©·½¿é
-public class CourtField extends Application
-{
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-}
-
 
 class CFmid extends Label{
 	String path;

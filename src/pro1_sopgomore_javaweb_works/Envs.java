@@ -16,23 +16,6 @@ import javafx.stage.Stage;
 
 public class Envs extends Application{
 
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
-	public void run(String[] args)
-	{
-		launch(args);
-	}
-	
-	CFmid[] mids;
-	CFside[] top;
-	CFside[] left;
-	CFside[] rig;
-	CFside[] bottom;
-	CFcorner ul,ur,dl,dr;
-	Player pler=new Player();
-	boolean quit=false;
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
@@ -59,6 +42,28 @@ public class Envs extends Application{
 		primaryStage.setTitle("五子棋");
 		primaryStage.show();
 	}
+	
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
+	public void run(String[] args)
+	{
+		launch(args);
+	}
+	
+	//本地游戏组件部
+	CFmid[] mids;
+	CFside[] top;
+	CFside[] left;
+	CFside[] rig;
+	CFside[] bottom;
+	CFcorner ul,ur,dl,dr;
+	Player pler=new Player();
+	boolean quit=false;
+	
+	int player;
+	
+	
 	//对局状态判断
 	void judge(GridPane cf,Stage ps)
 	{
@@ -68,21 +73,18 @@ public class Envs extends Application{
 		if(pler.status()==-1)
 		{
 			pler.refresh();
-
 			won(cf,-1,ps);
 		}
 		//黑色胜利
 		else if(pler.status()==1)
 		{
 			pler.refresh();
-
 			won(cf,1,ps);
 		}
 		//白色胜利
 		else if(pler.status()==0)
 		{
 			pler.refresh();
-			
 			won(cf,0,ps);
 		}
 		//其他情况
@@ -91,6 +93,7 @@ public class Envs extends Application{
 			
 		}
 	}
+	
 	//胜利后做什么，-1/0/1状态分离
 	void won(GridPane cf,int status,Stage ps)
 	{
@@ -149,6 +152,7 @@ public class Envs extends Application{
 		
 		
 	}
+	
 	//清屏
 	void clr(GridPane cf)
 	{
@@ -228,7 +232,5 @@ public class Envs extends Application{
 		}
 		cf.add(dr, 14, 14);
 		dr.event(pler,14,14);
-		
-		
 	}
 }

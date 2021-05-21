@@ -32,7 +32,7 @@ public class Rules{
 		else 
 			return 0;
 	}
-	//1黑赢，0白赢，2什么也不发生
+	//0白赢，1黑赢，2什么也不发生
 	static int winner(Player pler)
 	{
 		int PresentLen_b=0;
