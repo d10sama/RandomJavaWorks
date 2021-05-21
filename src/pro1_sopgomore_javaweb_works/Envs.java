@@ -16,9 +16,9 @@ import javafx.stage.Stage;
 
 public class Envs extends Application{
 
-//	public static void main(String[] args) {
-//		Application.launch(args);
-//	}
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
 	public void run(String[] args)
 	{
 		launch(args);
@@ -47,10 +47,9 @@ public class Envs extends Application{
 		}
 		Scene scene = new Scene(cf,1000,850);
 		cf.setOnMouseClicked(e->
-		{
-			judge(cf,primaryStage);
-		}
-	);
+			{
+				judge(cf,primaryStage);
+			});
 		scene.setOnMouseClicked(e->
 		{
 			if(quit==true)
@@ -166,20 +165,20 @@ public class Envs extends Application{
 	{
 		int PosDetect=0;
 		cf.setAlignment(Pos.TOP_LEFT);
-		ul=new CFcorner(0);
+		ul=new CFcorner(0,0,0);
 		mids=new CFmid[169];
 		top=new CFside[13];
 		left=new CFside[13];
 		rig=new CFside[13];
 		bottom=new CFside[13];
-		ur=new CFcorner(1);
-		dl=new CFcorner(3);
-		dr=new CFcorner(2);
+		ur=new CFcorner(1,0,14);
+		dl=new CFcorner(3,14,0);
+		dr=new CFcorner(2,14,14);
 		cf.add(ul,0,0);
 		ul.event(pler,0,0);
 		while(PosDetect<13)
 		{	
-			left[PosDetect]=new CFside(0);
+			left[PosDetect]=new CFside(0,(PosDetect+1),0);
 			final int PD=PosDetect;
 			left[PosDetect].event(pler,PD+1,0);
 			cf.add(left[PosDetect],0,PosDetect+1);
@@ -196,20 +195,20 @@ public class Envs extends Application{
 				switch(j)
 				{
 				case 0:{
-						top[i]=new CFside(1);
+						top[i]=new CFside(1,J,I+1);
 						top[i].event(pler,J,I+1);
 							cf.add(top[i], i+1, j);
 						break;
 						}
 				case 14:{
-						bottom[i]=new CFside(3);
+						bottom[i]=new CFside(3,J,I+1);
 						bottom[i].event(pler,J,I+1);
 						cf.add(bottom[i], i+1, j);
 						break;
 						}
 				default:
 					final int PD=i*(j-1);
-					mids[PD]=new CFmid();
+					mids[PD]=new CFmid(J,I+1);
 					mids[PD].event(pler,J,I+1);
 					cf.add(mids[PD], i+1, j);
 					break;
@@ -222,7 +221,7 @@ public class Envs extends Application{
 		while(PosDetect<13)
 		{
 			final int PD=PosDetect;
-			rig[PosDetect]=new CFside(2);
+			rig[PosDetect]=new CFside(2,PD+1,14);
 			rig[PosDetect].event(pler,PD+1,14);
 			cf.add(rig[PosDetect], 14, PosDetect+1);
 			PosDetect++;

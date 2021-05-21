@@ -1,5 +1,7 @@
 package pro1_sopgomore_javaweb_works;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -202,4 +204,31 @@ public class Rules{
 		return 2;
 	}
 }
-
+class Methods
+{
+	public static byte[] intTobyte2(int num)
+    {
+        byte[] result=null;
+        ByteArrayOutputStream bos=new ByteArrayOutputStream(100);
+        DataOutputStream dos=new DataOutputStream(bos);
+        try {
+            dos.writeInt(num);
+            result=bos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+	public static int byteArrayToInt2(byte[] arr)
+    {
+        int result=0;
+        ByteArrayInputStream bis=new ByteArrayInputStream(arr);
+        DataInputStream dis=new DataInputStream(bis);
+        try {
+            result= dis.readInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+}

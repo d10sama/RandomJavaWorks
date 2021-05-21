@@ -3,11 +3,14 @@ package pro1_sopgomore_javaweb_works;
 //╟ввсохвъ
 
 public class Player {
+	
 	boolean isWhite=true;
 	int[][] nodes_w;
 	int[][] nodes_b;
 	int status=0;
 	int nodecount=225;
+	int wClickedRow,wClickedColumn;
+	int bClickedRow,bClickedColumn;
 	
 	Player()
 	{

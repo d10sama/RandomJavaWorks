@@ -20,21 +20,7 @@ public class CourtField extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		VBox Field =new VBox(0);
-		CFcorner cm1=new CFcorner(0);
-		CFcorner cm2=new CFcorner(1);
-		CFcorner cm3=new CFcorner(2);
-		CFcorner cm4=new CFcorner(3);
-		Field.getChildren().addAll(cm1,cm2,cm3,cm4);
 		
-		Scene scene = new Scene(Field,1024,768);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("TestField");
-		primaryStage.show();
-	}
-	public static void main(String[] args)
-	{
-		launch(args);
 	}
 }
 
@@ -46,27 +32,34 @@ class CFmid extends Label{
 	Image i1;
 	ImageView i1v;
 	boolean isLoadFail=false;
+	int MyPosRow,MyPosColumn;
 	void event(Player pler,int i,int j)
 	{
 		this.setOnMouseClicked(e->{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_w[i][j]=1;
-				pler.nodecount--;pler.print(1);
+				this.MyPosRow=i;this.MyPosColumn=j;
+				pler.nodecount--;
+				//pler.print(1);
+				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
 				this.Turn(0);
 				pler.status=Rules.result(pler);
 				pler.isWhite=false;
 			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_b[i][j]=1;
-				pler.nodecount--;pler.print(1);
+				this.MyPosRow=i;this.MyPosColumn=j;
+				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
+				pler.nodecount--;
+				//pler.print(1);
 				this.Turn(1);
 				pler.status=Rules.result(pler);
 				pler.isWhite=true;
 			}
 		});
 	}
-	CFmid()
+	CFmid(int mpr,int mpc)
 	{
 		path=new File("lib/MidField.png").getAbsolutePath();
 		path_W=new File("lib/MidField_W.png").getAbsolutePath();
@@ -128,7 +121,8 @@ class CFside extends Label{
 	ImageView i1v;
 	boolean isLoadFail=false;
 	int iRotated;
-	CFside(int i)
+	int MyPosRow,MyPosColumn;
+	CFside(int i,int mpr,int mpc)
 	{
 		path=new File("lib/SideField.png").getAbsolutePath();
 		path_W=new File("lib/SideField_W.png").getAbsolutePath();
@@ -162,14 +156,21 @@ class CFside extends Label{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_w[i][j]=1;
-				pler.nodecount--;pler.print(1);
+				this.MyPosRow=i;
+				this.MyPosColumn=j;
+				pler.nodecount--;
+				//pler.print(1);
+				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
 				this.Turn(0);
 				pler.status=Rules.result(pler);
 				pler.isWhite=false;
 			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_b[i][j]=1;
-				pler.nodecount--;pler.print(1);
+				this.MyPosRow=i;this.MyPosColumn=j;
+				pler.nodecount--;
+				//pler.print(1);
+				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
 				this.Turn(1);
 				pler.status=Rules.result(pler);
 				pler.isWhite=true;
@@ -215,7 +216,8 @@ class CFcorner extends Label{
 	ImageView i1v;
 	boolean isLoadFail=false;
 	int iRotated;
-	CFcorner(int i)
+	int MyPosRow,MyPosColumn;
+	CFcorner(int i,int mpr,int mpc)
 	{
 		path=new File("lib/CornerField.png").getAbsolutePath();
 		path_W=new File("lib/CornerField_W.png").getAbsolutePath();
@@ -249,14 +251,18 @@ class CFcorner extends Label{
 			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_w[i][j]=1;
-				
-				pler.nodecount--;pler.print(1);
+				this.MyPosRow=i;this.MyPosColumn=j;
+				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
+				pler.nodecount--;
+				//pler.print(1);
 				this.Turn(0);
 				pler.status=Rules.result(pler);
 				pler.isWhite=false;
 			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
 			{
 				pler.nodes_b[i][j]=1;
+				this.MyPosRow=i;this.MyPosColumn=j;
+				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
 				pler.nodecount--;
 				this.Turn(1);
 				pler.status=Rules.result(pler);
