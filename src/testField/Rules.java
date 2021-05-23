@@ -1,4 +1,4 @@
-package pro1_sopgomore_javaweb_works;
+package testField;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,7 +27,7 @@ public class Rules{
 	//Æ½¾Ö×´¿ö
 	static int draw(Player pler)
 	{
-		if(pler.nodecount==0)
+		if(pler.nodecount<=0)
 			return 1;
 		else 
 			return 0;
@@ -56,8 +56,15 @@ public class Rules{
 					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
 				if(pler.nodes_b[row][column]==1)
 					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				else if(pler.nodes_w[row][column]==0)
+				{	
+					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+					PresentLen_w=0;
+				}
+				else if(pler.nodes_b[row][column]==0)
+				{	MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+					PresentLen_b=0;
+				}
 				row++;
 			}
 			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
@@ -82,8 +89,14 @@ public class Rules{
 					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
 				if(pler.nodes_b[row][column]==1)
 					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				else if(pler.nodes_w[row][column]==0)
+				{	MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+					PresentLen_w=0;
+				}
+				else if(pler.nodes_b[row][column]==0)
+				{	MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+					PresentLen_b=0;
+				}
 				column++;
 			}
 			MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
@@ -105,12 +118,16 @@ public class Rules{
 				 
 				if(pler.nodes_w[row][column]==1)
 					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				else if(pler.nodes_w[row][column]==0)
+				{	MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				PresentLen_w=0;
+				}
 				if(pler.nodes_b[row][column]==1)
 					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				else if(pler.nodes_b[row][column]==0)
+				{	MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+					PresentLen_b=0;
+				}
 				column++;
 				row--;
 			}
@@ -132,12 +149,16 @@ public class Rules{
 				 
 				if(pler.nodes_w[row][column]==1)
 					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				else if(pler.nodes_w[row][column]==0)
+				{	MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				PresentLen_w=0;
+				}
 				if(pler.nodes_b[row][column]==1)
 					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				else if(pler.nodes_b[row][column]==0)
+				{	MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				PresentLen_b=0;
+				}
 				row--;
 				column++;
 			}
@@ -160,12 +181,16 @@ public class Rules{
 				 
 				if(pler.nodes_w[row][column]==1)
 					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				else if(pler.nodes_w[row][column]==0)
+				{	MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				PresentLen_w=0;
+				}
 				if(pler.nodes_b[row][column]==1)
 					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				else if(pler.nodes_b[row][column]==0)
+				{	MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+					PresentLen_b=0;
+				}
 				column++;
 				row++;
 			}
@@ -187,12 +212,16 @@ public class Rules{
 				 
 				if(pler.nodes_w[row][column]==1)
 					PresentLen_w++;
-				else
-					MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+				else if(pler.nodes_w[row][column]==0)
+				{	MaxLen_w=MaxLen_w<PresentLen_w?PresentLen_w:MaxLen_w;
+					PresentLen_w=0;
+				}
 				if(pler.nodes_b[row][column]==1)
 					PresentLen_b++;
-				else
-					MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+				else if(pler.nodes_b[row][column]==0)
+				{	MaxLen_b=MaxLen_b<PresentLen_b?PresentLen_b:MaxLen_b;
+					PresentLen_b=0;
+				}
 				column++;
 				row++;
 			}

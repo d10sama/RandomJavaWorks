@@ -1,16 +1,16 @@
-package pro1_sopgomore_javaweb_works;
+package testField;
 
 //╟ввсохвъ
 
 public class Player {
 	
 	boolean isWhite=true;
-	int[][] nodes_w;
-	int[][] nodes_b;
+	public int[][] nodes_w;
+	public int[][] nodes_b;
 	int status=0;
-	int nodecount=225;
-	int wClickedRow,wClickedColumn;
-	int bClickedRow,bClickedColumn;
+	public int nodecount=225;
+	int wClickedRow=-1,wClickedColumn=-1;
+	int bClickedRow=-1,bClickedColumn=-1;
 	
 	public Player()
 	{

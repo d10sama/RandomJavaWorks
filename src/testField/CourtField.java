@@ -1,17 +1,13 @@
-package pro1_sopgomore_javaweb_works;
+package testField;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 //标签方块
 
@@ -23,32 +19,6 @@ class CFmid extends Label{
 	ImageView i1v;
 	boolean isLoadFail=false;
 	int MyPosRow,MyPosColumn;
-	void event(Player pler,int i,int j)
-	{
-		this.setOnMouseClicked(e->{
-			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
-			{
-				pler.nodes_w[i][j]=1;
-				this.MyPosRow=i;this.MyPosColumn=j;
-				pler.nodecount--;
-				//pler.print(1);
-				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
-				this.Turn(0);
-				pler.status=Rules.result(pler);
-				pler.isWhite=false;
-			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
-			{
-				pler.nodes_b[i][j]=1;
-				this.MyPosRow=i;this.MyPosColumn=j;
-				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
-				pler.nodecount--;
-				//pler.print(1);
-				this.Turn(1);
-				pler.status=Rules.result(pler);
-				pler.isWhite=true;
-			}
-		});
-	}
 	CFmid()
 	{
 		path=new File("lib/MidField.png").getAbsolutePath();
@@ -166,34 +136,6 @@ class CFside extends Label{
 				this.setPrefSize(300, 50);
 			}
 	}
-	void event(Player pler,int i,int j)
-	{
-		this.setOnMouseClicked(e->{
-			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
-			{
-				pler.nodes_w[i][j]=1;
-				this.MyPosRow=i;
-				this.MyPosColumn=j;
-				pler.nodecount--;
-				//pler.print(1);
-				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
-				this.Turn(0);
-				pler.status=Rules.result(pler);
-				pler.isWhite=false;
-			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
-			{
-				pler.nodes_b[i][j]=1;
-				this.MyPosRow=i;this.MyPosColumn=j;
-				pler.nodecount--;
-				//pler.print(1);
-				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
-				this.Turn(1);
-				pler.status=Rules.result(pler);
-				pler.isWhite=true;
-			}
-		});
-		
-	}
 	//0变白，1变黑
 	void Turn(int i)
 	{
@@ -260,31 +202,6 @@ class CFcorner extends Label{
 			this.setText(String.format("请在%s同级文件夹中放入‘lib’文件夹",tmp.getAbsolutePath()));
 			this.setPrefSize(300, 50);
 		}
-	}
-	void event(Player pler,int i,int j)
-	{
-		this.setOnMouseClicked(e->{
-			if(pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
-			{
-				pler.nodes_w[i][j]=1;
-				this.MyPosRow=i;this.MyPosColumn=j;
-				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
-				pler.nodecount--;
-				//pler.print(1);
-				this.Turn(0);
-				pler.status=Rules.result(pler);
-				pler.isWhite=false;
-			}else if(!pler.isWhite&&pler.nodes_w[i][j]==0&&pler.nodes_b[i][j]==0)
-			{
-				pler.nodes_b[i][j]=1;
-				this.MyPosRow=i;this.MyPosColumn=j;
-				System.out.println("Row"+this.MyPosRow+"Column"+this.MyPosColumn);
-				pler.nodecount--;
-				this.Turn(1);
-				pler.status=Rules.result(pler);
-				pler.isWhite=true;
-			}
-		});
 	}
 	//0变白，1变黑
 	void Turn(int i)
