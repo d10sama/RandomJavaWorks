@@ -29,6 +29,7 @@ public class Server extends Thread{
 	int GameStatus=2;
 	boolean is_coordinate_validate=false;
 	int p1re=1,p2re=1;
+	boolean WCoordinateValid=false,BCoordinateValid=false;
 	
 	
 	//网络连接部
@@ -108,89 +109,103 @@ public class Server extends Thread{
 	{
 		while(this.GameStatus==2)
 		{
-			//玩家白
 			int mpr=-1,mpc=-1;
-			try {
-				//接收row
-				mpr=rec1.readInt();
-				//接收column
-				mpc=rec1.readInt();
-				System.out.println(
-						("白")
-						+" "+mpr+","+mpc);
-			}
-				catch(Exception e) {System.out.println("接收数据时出错");}
+			this.WCoordinateValid=false;
+			this.BCoordinateValid=false;
+			while(!this.WCoordinateValid)
+				{//玩家白
 				
-			//判断接收数据是否合法
-			this.is_coordinate_validate=DataValidate(mpr,mpc);
-				
-			//返回数据是否承认
-			try {
-			if(this.is_coordinate_validate)
-			{	
-				snd1.writeInt(1);
-				
-				//修改pler数据，刷新数据并通知玩家2
-				
-				this.pler.nodes_w[mpr][mpc]=1;
-				this.pler.nodecount--;
-				
-				//告知黑棋改棋子
-				snd4.writeInt(1);
-				snd4.writeInt(mpr);
-				snd4.writeInt(mpc);
-				
-				sendOperation();
-			}
-			else
-				snd1.write(0);
-			}catch(Exception e) 
-			{
-				System.out.println("服务器发送数据出错");
-				//出错则跳跃到下次循环
-				continue;
+				try {
+					//接收row
+					mpr=rec1.readInt();
+					//接收column
+					mpc=rec1.readInt();
+					System.out.println(
+							("白")
+							+" "+mpr+","+mpc);
+				}
+					catch(Exception e) {System.out.println("接收数据时出错");}
+					
+				//判断接收数据是否合法
+				this.is_coordinate_validate=DataValidate(mpr,mpc);
+					
+				//返回数据是否承认
+				try {
+				if(this.is_coordinate_validate)
+				{	
+					snd1.writeInt(1);
+					
+					//修改pler数据，刷新数据并通知玩家2
+					
+					this.pler.nodes_w[mpr][mpc]=1;
+					this.pler.nodecount--;
+					
+					//告知黑棋改棋子
+					snd4.writeInt(1);
+					snd4.writeInt(mpr);
+					snd4.writeInt(mpc);
+					
+					sendOperation();
+					this.WCoordinateValid=true;
+				}
+				else
+				{
+					snd4.writeInt(6);
+					snd1.writeInt(0);
+				}
+				}catch(Exception e) 
+				{
+					System.out.println("服务器发送数据出错");
+					//出错则跳跃到下次循环
+					continue;
+				}
 			}
 			
 			//玩家黑
 			mpr=-1;
 			mpc=-1;
-			try {
-				//接收row
-				mpr=rec2.readInt();
-				//接收column
-				mpc=rec2.readInt();
-				System.out.println(
-						("黑")
-						+" "+mpr+","+mpc);
-			}
-				catch(Exception e) {System.out.println("接收数据时出错");}
-				
-			//判断接收数据是否合法
-			this.is_coordinate_validate=DataValidate(mpr,mpc);
-				
-			//返回数据是否承认
-			try {
-			if(this.is_coordinate_validate)
+			while(!this.BCoordinateValid)
 			{	
-				snd2.writeInt(1);
-				
-				//修改pler数据，刷新数据并通知
-				snd3.writeInt(1);
-				snd3.writeInt(mpr);
-				snd3.writeInt(mpc);
-				this.pler.nodes_b[mpr][mpc]=1;
-				this.pler.nodecount--;
-				
-				sendOperation();
-				
-			}
-			else
-				snd2.write(0);
-			}catch(Exception e) 
-			{
-				System.out.println("服务器发送数据出错");
-				//出错则跳跃到下次循环
-				continue;
+				try {
+					//接收row
+					mpr=rec2.readInt();
+					//接收column
+					mpc=rec2.readInt();
+					System.out.println(
+							("黑")
+							+" "+mpr+","+mpc);
+				}
+					catch(Exception e) {System.out.println("接收数据时出错");}
+					
+				//判断接收数据是否合法
+				this.is_coordinate_validate=DataValidate(mpr,mpc);
+					
+				//返回数据是否承认
+				try {
+				if(this.is_coordinate_validate)
+				{	
+					snd2.writeInt(1);
+					
+					//修改pler数据，刷新数据并通知
+					snd3.writeInt(1);
+					snd3.writeInt(mpr);
+					snd3.writeInt(mpc);
+					this.pler.nodes_b[mpr][mpc]=1;
+					this.pler.nodecount--;
+					sendOperation();
+					this.BCoordinateValid=true;
+				}
+				else
+				{
+					snd3.writeInt(6);
+					snd2.writeInt(0);
+				}
+				}catch(Exception e) 
+				{
+					System.out.println("服务器发送数据出错");
+					//出错则跳跃到下次循环
+					continue;
+				}
 			}
 		}
 	}

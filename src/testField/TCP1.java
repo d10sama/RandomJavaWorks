@@ -215,6 +215,15 @@ public class TCP1 extends Application{
 					try {toServer.writeInt(sendint);}catch (IOException e1){e1.printStackTrace();}
 					
 					//读取服务器发来的操作验证
+				/*
+				 * Platform.runLater(new Runnable(){
+				 * 
+				 * @Override public void run() { int waittime=1;
+				 * 
+				 * while(waittime<2) { try { Thread.sleep(1000); } catch (InterruptedException
+				 * e) { // TODO Auto-generated catch block e.printStackTrace(); } waittime++; }
+				 * if MessageStage("输入不在范围内哦"); } });
+				 */
 					try {OperationValid=this.fromServer.readInt();} 
 					catch (IOException e1) {
 						System.out.println("验证操作时出错  "+new Date());
@@ -223,7 +232,6 @@ public class TCP1 extends Application{
 					if(OperationValid==1)
 					{
 						Turn(mpr,mpc,0);
-						
 					}else
 					{
 						
@@ -416,6 +424,17 @@ public class TCP1 extends Application{
 						@Override
 						public void run() {
 							won(-1);
+						}
+						});
+					ModifySignal=0;
+				}
+				//对方憨批则弹窗
+				else if(ModifySignal==6)
+				{
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							MessageStage("对方下错棋了，稍等哈");
 						}
 						});
 					ModifySignal=0;

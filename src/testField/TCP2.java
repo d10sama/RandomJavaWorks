@@ -204,8 +204,10 @@ public class TCP2 extends Application{
 					try {toServer.writeInt(sendint);}catch (IOException e1){e1.printStackTrace();}
 					
 					//读取服务器发来的操作验证
+					OperationValid=-1;
 					try {OperationValid=this.fromServer.readInt();} 
 					catch (IOException e1) {
+						System.out.println("OV=? -1 IF UNRECEIVED!"+OperationValid);
 						System.out.println("验证操作时出错  "+new Date());
 						MessageStage("验证操作时出错"+new Date());}
 					//可以操作
@@ -406,6 +408,17 @@ public class TCP2 extends Application{
 						@Override
 						public void run() {
 							won(-1);
+						}
+						});
+					ModifySignal=0;
+				}
+				//
+				else if(ModifySignal==6)
+				{
+					Platform.runLater(new Runnable(){
+						@Override
+						public void run() {
+							MessageStage("对方下错棋了，稍等哈");
 						}
 						});
 					ModifySignal=0;
