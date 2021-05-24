@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javafx.stage.Stage;
+
 
 public class Server extends Thread{
 	public static void main(String[] args)
 	{
-		
 		Player pler=new Player();
 		new Server(pler).start();
+		
+		
 	}
 	
 	//游戏数据部

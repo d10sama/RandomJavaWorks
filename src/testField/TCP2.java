@@ -248,7 +248,7 @@ public class TCP2 extends Application{
 				this.ur.Turn(b_w);
 				break;
 			default:
-				this.top[mpc].Turn(b_w);
+				this.top[mpc-1].Turn(b_w);
 				break;
 			}
 			break;
@@ -262,7 +262,7 @@ public class TCP2 extends Application{
 				this.dr.Turn(b_w);
 				break;
 			default:
-				this.bottom[mpc].Turn(b_w);
+				this.bottom[mpc-1].Turn(b_w);
 				break;
 			}
 			break;

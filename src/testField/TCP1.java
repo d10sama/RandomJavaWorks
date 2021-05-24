@@ -56,6 +56,7 @@ public class TCP1 extends Application{
 	{
 		
 		launch(args);
+		launch(args);
 		
 	}
 	@Override
@@ -203,7 +204,7 @@ public class TCP1 extends Application{
 				if(mpr<0||mpr>14||mpc<0||mpc>14)
 				{
 					MessageStage("输入不在范围内哦");
-				}else if(lastr==mpr&&lastc==mpc){}
+				}
 				else
 				{
 					//送出row
@@ -257,7 +258,7 @@ public class TCP1 extends Application{
 				this.ur.Turn(b_w);
 				break;
 			default:
-				this.top[mpc].Turn(b_w);
+				this.top[mpc-1].Turn(b_w);
 				break;
 			}
 			break;
@@ -271,7 +272,7 @@ public class TCP1 extends Application{
 				this.dr.Turn(b_w);
 				break;
 			default:
-				this.bottom[mpc].Turn(b_w);
+				this.bottom[mpc-1].Turn(b_w);
 				break;
 			}
 			break;
