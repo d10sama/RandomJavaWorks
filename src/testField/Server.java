@@ -157,7 +157,7 @@ public class Server extends Thread{
 				{
 					System.out.println("服务器发送数据出错");
 					//出错则跳跃到下次循环
-					continue;
+					break;
 				}
 			}
 			
@@ -204,7 +204,7 @@ public class Server extends Thread{
 				{
 					System.out.println("服务器发送数据出错");
 					//出错则跳跃到下次循环
-					continue;
+					break;
 				}
 			}
 		}
