@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
@@ -53,6 +54,8 @@ public class ImgMaker extends Application{
 	VBox ToolBox,ScrBar,paintBox;
 	HBox RGBStore,FLIP,PORT;
 	Button quit,imprt,exprt,paint,Vflip,Hflip,NoiseClr,backup,Gradient,invert;
+	Hyperlink link = new Hyperlink("https://github.com/d10sama");
+
 	TextField R,G,B;
 	Label Caption_gs;
 	ScrollBar GreyScale;
@@ -141,7 +144,7 @@ public class ImgMaker extends Application{
 		this.ToolBox.getChildren().addAll(new Label("π§æﬂœ‰"),this.PORT,
 										this.invert,this.FLIP
 										,NoiseClr,this.paintBox,this.ScrBar,
-										this.Gradient,backup,quit);
+										this.Gradient,backup,quit,this.link);
 		ToolBox.setAlignment(Pos.CENTER_LEFT);
 		ToolBox.setPadding(new Insets(10));
 		ToolBox.setSpacing(30);
